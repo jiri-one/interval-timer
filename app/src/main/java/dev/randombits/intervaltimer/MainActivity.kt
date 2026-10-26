@@ -11,7 +11,15 @@ class MainActivity : AppCompatActivity() {
     private var alarmSound = 0
     private var endSound = 0;
     private var alarmStream = 0;
+    private var endStream = 0;
     private var alarmTime = 0L;
+
+    // position of the volume slider, from 0 to 1
+    var volume = 1f
+        private set
+
+    // squared, so that the middle of the slider sounds about half as loud
+    private val gain get() = volume * volume;
 
     private val attributes: AudioAttributes = AudioAttributes.Builder()
         .setUsage(AudioAttributes.USAGE_MEDIA)
@@ -35,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         val activeTime = prefs.getInt("activeTime", 45);
         val restTime = prefs.getInt("restTime", 15);
         val sets = prefs.getInt("sets", 0);
+        volume = prefs.getFloat("volume", 1f);
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -81,6 +90,16 @@ class MainActivity : AppCompatActivity() {
         prefs.apply();
     }
 
+    fun changeVolume(newVolume: Float) {
+        volume = newVolume.coerceIn(0f, 1f);
+        // sounds that have ended ignore this
+        for (stream in listOf(alarmStream, endStream))
+            if (stream > 0)
+                soundPool.setVolume(stream, gain, gain);
+
+        getSharedPreferences(packageName, MODE_PRIVATE).edit().putFloat("volume", volume).apply();
+    }
+
     fun cancelAlarm() {
         // a resumed countdown beeps again
         alarmTime = 0;
@@ -98,7 +117,7 @@ class MainActivity : AppCompatActivity() {
             return;
 
         // if it fails, the next tick tries again
-        val stream = soundPool.play(alarmSound, 1f, 1f, 1, 0, 1f);
+        val stream = soundPool.play(alarmSound, gain, gain, 1, 0, 1f);
         if (stream == 0)
             return;
 
@@ -107,6 +126,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun soundEnd() {
-        soundPool.play(endSound, 1f, 1f, 1, 2, 1f)
+        endStream = soundPool.play(endSound, gain, gain, 1, 2, 1f)
     }
 }

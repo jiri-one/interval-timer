@@ -18,4 +18,5 @@
     <string name="sets_label">Sets</string>
     <string name="decrease_sets">Decrease Sets</string>
     <string name="increase_sets">Increase Sets</string>
+    <string name="volume">Volume</string>
 </resources>

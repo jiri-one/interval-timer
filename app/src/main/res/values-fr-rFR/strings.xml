@@ -19,4 +19,5 @@
     <string name="sets_label">Répétitions</string>
     <string name="decrease_sets">Diminuer Répétitions</string>
     <string name="increase_sets">Augmenter Répétitions</string>
+    <string name="volume">Volume</string>
 </resources>

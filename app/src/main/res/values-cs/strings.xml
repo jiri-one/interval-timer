@@ -18,4 +18,5 @@
     <string name="sets_label">Sety</string>
     <string name="decrease_sets">Snížení setů</string>
     <string name="increase_sets">Zvýšení setů</string>
+    <string name="volume">Hlasitost</string>
 </resources>

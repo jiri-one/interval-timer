@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <size android:width="32dp" android:height="32dp"/>
+            <solid android:color="@color/startBg"/>
+            <stroke android:width="2dp" android:color="#222"/>
+        </shape>
+    </item>
+    <!-- turned against the rotation of the slider in VerticalFrame, so that it stays upright;
+         the slider sets the level to its progress, so 0 shows the muted speaker -->
+    <item android:width="20dp" android:height="20dp" android:gravity="center">
+        <rotate android:fromDegrees="90" android:toDegrees="90">
+            <level-list>
+                <item android:maxLevel="0" android:drawable="@drawable/volume_off_24"/>
+                <item android:minLevel="1" android:maxLevel="10000" android:drawable="@drawable/volume_up_24"/>
+            </level-list>
+        </rotate>
+    </item>
+</layer-list>

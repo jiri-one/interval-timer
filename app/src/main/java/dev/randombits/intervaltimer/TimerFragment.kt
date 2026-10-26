@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import kotlin.math.roundToInt
 
 private const val ARG_PARAM1 = "active";
 private const val ARG_PARAM2 = "rest";
@@ -103,7 +105,29 @@ class TimerFragment : Fragment() {
         view.findViewById<View>(R.id.resumeBtn).setOnClickListener { resumeTimer(); }
         view.findViewById<View>(R.id.stopBtn).setOnClickListener { stopTimer(); }
 
+        setupVolumeControl(view);
+
         return view;
+    }
+
+    private fun setupVolumeControl(view: View) {
+        val slider: SeekBar = view.findViewById(R.id.volumeSlider);
+        slider.progress = (mainActivity!!.volume * 100).roundToInt();
+        // the arrow keys would otherwise move it by 1 of 100
+        slider.keyProgressIncrement = 5;
+        // the thumb shows a muted speaker at level 0
+        slider.thumb.setLevel(slider.progress);
+
+        slider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                mainActivity!!.changeVolume(progress / 100f);
+                seekBar.thumb.setLevel(progress);
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        });
     }
 
     private fun pauseTimer() {

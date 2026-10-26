@@ -68,6 +68,29 @@
                 android:layout_gravity="center"
                 android:contentDescription="@string/btn_stop"
                 android:background="@drawable/stop_circle_120"/>
+
+        <dev.randombits.intervaltimer.VerticalFrame
+                android:id="@+id/volumeControl"
+                android:layout_width="48dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center">
+
+            <SeekBar
+                    android:id="@+id/volumeSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/volume"
+                    android:max="100"
+                    android:minHeight="8dp"
+                    android:maxHeight="8dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:progressDrawable="@drawable/volume_track"
+                    android:progressTint="?attr/colorControlNormal"
+                    android:progressBackgroundTint="?attr/colorControlNormal"
+                    android:thumb="@drawable/volume_thumb"/>
+        </dev.randombits.intervaltimer.VerticalFrame>
     </LinearLayout>
 
 </LinearLayout>
